@@ -2,5 +2,6 @@
 
 TYPE_KEYWORDS = [
   'METAR',
+  'SPECI'
   'TAF'
 ]
