@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from gen_parser import tokenize_text
-from keywords import TYPE_KEYWORDS
+from keywords import TYPE_KEYWORDS, DESCRIPTOR_KEYWORDS, DESCRIPTOR_MAP, PHENOMENA_KEYWORDS, PHENOMENA_MAP
 
 from fractions import Fraction
 
@@ -158,6 +158,57 @@ class WeatherReport():
     info = self.tokens[4 + offset]
 
     return Fraction(info[:-2]) * 1.0
+
+  def __is_weather(self, desc):
+    '''
+    Private function to determine if a given discriptor is a weather descriptor.
+
+    return:
+    is_weather: bool
+    '''
+    for phenomenon in PHENOMENA_KEYWORDS:
+      if phenomenon in desc:
+        return True
+
+    return False
+
+  def weather(self):
+    '''
+    This function returns the present weather provided in the weather report.
+
+    return:
+    weather: string []
+    '''
+    offset = self.__offset(True, True)
+    idx = 5 + offset
+    all_weather = []
+
+    for i in range(3):
+      desc = self.tokens[idx + i]
+      weather = ''
+      if self.__is_weather(desc):
+        if '+' in desc:
+          weather = 'Heavy'
+        elif '-' in desc:
+          weather = 'Light'
+        else:
+          weather = 'Moderate'
+        
+        for descriptor in DESCRIPTOR_KEYWORDS:
+          if descriptor in desc:
+            weather = f'{weather} {DESCRIPTOR_MAP[descriptor]}'
+            break
+        
+        for phenomena in PHENOMENA_KEYWORDS:
+          if phenomena in desc:
+            weather = f'{weather} {PHENOMENA_MAP[phenomena]}'
+            break
+
+        all_weather.append(weather)
+      else:
+        break
+    
+    return all_weather
 
 # TESTING
 
