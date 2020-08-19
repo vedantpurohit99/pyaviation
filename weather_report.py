@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from gen_parser import tokenize_text
-from keywords import TYPE_KEYWORDS, DESCRIPTOR_KEYWORDS, DESCRIPTOR_MAP, PHENOMENA_KEYWORDS, PHENOMENA_MAP
+from keywords import *
 
 from fractions import Fraction
 
@@ -209,6 +209,51 @@ class WeatherReport():
         break
     
     return all_weather
+
+  def __is_sky(self, desc):
+    '''
+    Private function to determine if a given discriptor is a sky condition descriptor.
+
+    return:
+    is_sky: bool
+    '''
+    for condition in SKY_KEYWORDS:
+      if condition in desc:
+        return True
+
+    return False
+
+  def sky(self):
+    '''
+    This function returns the sky condition reported in the weather report.
+
+    return:
+    sky: string []
+    '''
+    offset = self.__offset(True, True)
+    idx = 5 + offset
+
+    while self.__is_weather(self.tokens[idx]):
+      idx += 1
+    
+    sky_conditions = []
+
+    while self.__is_sky(self.tokens[idx]):
+      condition = ''
+      desc = self.tokens[idx]
+      for sky_condition in SKY_KEYWORDS:
+        if sky_condition in desc:
+          condition = f'{SKY_MAP[sky_condition]}'
+          break
+      
+      height = int(desc[3:]) * 100
+      condition = f'{condition} at {height} ft'
+
+      sky_conditions.append(condition)
+
+      idx += 1
+
+    return sky_conditions
 
 # TESTING
 
