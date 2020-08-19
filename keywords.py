@@ -78,3 +78,19 @@ PHENOMENA_MAP = {
   'FC': 'Funnel Cloud'
 }
 
+SKY_KEYWORDS = [
+  'SKC',
+  'FEW',
+  'SCT',
+  'BKN',
+  'OVC'
+]
+
+SKY_MAP = {
+  'SKC': 'Sky Clear',
+  'FEW': 'Trace to 2 oktas',
+  'SCT': '3 to 4 oktas',
+  'BKN': '5 to less than 8 oktas',
+  'OVC': '8 oktas'
+}
+
