@@ -287,6 +287,20 @@ class WeatherReport():
       dewpoint = int(dewpoint)
     
     return temp, dewpoint
+
+  def altimeter(self):
+    '''
+    This function returns the altimeter setting reported by the weather report.
+
+    return:
+    alt: float (in inches of mercury)
+    '''
+    offset = self.__offset(True, True, True, True)
+    idx = 6 + offset
+
+    alt = float(self.tokens[idx][1:]) / 100
+
+    return alt
 # TESTING
 
 report = 'METAR CYYZ 162200Z 26010KT 210V280 15SM BKN035 BKN100 24/16 A2989 RMK CU6AC1 SLP121 DENSITY ALT 1900FT='
