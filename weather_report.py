@@ -301,6 +301,47 @@ class WeatherReport():
     alt = float(self.tokens[idx][1:]) / 100
 
     return alt
+
+  def remark(self):
+    '''
+    This function returns all the remarks reported by the weather report.
+
+    return:
+    remarks: string []
+    '''
+    offset = self.__offset(True, True, True, True)
+    idx = 7 + offset
+
+    assert self.tokens[idx] == 'RMK'
+
+    remarks = []
+    idx += 1
+
+    while idx < len(self.tokens):
+      desc = self.tokens[idx]
+      if 'SLP' in desc:
+        slp = int(self.tokens[idx][3:])
+        if slp >= 850:
+          slp += 9000
+          slp /= 10
+        else:
+          slp += 10000
+          slp /= 10
+
+        rem = f'Sea Level Pressure {slp}'
+        remarks.append(rem)
+      else:
+        for cloud in CLOUD_KEYWORDS:
+          if cloud in desc:
+            index = desc.index(cloud) + len(cloud)
+            opacity = desc[index]
+            if opacity.isdigit():
+              rem = f'{opacity}/8 opacity of {CLOUD_MAP[cloud]}'
+              remarks.append(rem)
+
+      idx += 1
+    
+    return remarks
 # TESTING
 
 report = 'METAR CYYZ 162200Z 26010KT 210V280 15SM BKN035 BKN100 24/16 A2989 RMK CU6AC1 SLP121 DENSITY ALT 1900FT='

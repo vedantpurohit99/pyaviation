@@ -94,3 +94,36 @@ SKY_MAP = {
   'OVC': '8 oktas'
 }
 
+CLOUD_KEYWORDS = [
+  'CI',
+  'ST',
+  'CS',
+  'SF',
+  'CC',
+  'SC',
+  'AS',
+  'CU',
+  'AC',
+  'CF',
+  'ACC',
+  'TCU',
+  'NS',
+  'CB'
+]
+
+CLOUD_MAP = {
+  'CI': 'Cirrus',
+  'ST': 'Stratus',
+  'CS': 'Cirrostratus',
+  'SF': 'Stratus Fractus',
+  'CC': 'Cirrocumulus',
+  'SC': 'Stratocumulus',
+  'AS': 'Altostratus',
+  'CU': 'Cumulus',
+  'AC': 'Altocumulus',
+  'CF': 'Cumulus Fractus',
+  'ACC': 'Altocumulus Castellanus',
+  'TCU': 'Towering Cumulus',
+  'NS': 'Nimbostratus',
+  'CB': 'Cumulonimbus'
+}
