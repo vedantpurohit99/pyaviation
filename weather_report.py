@@ -81,7 +81,7 @@ class WeatherReport():
 
     return is_auto == 'AUTO'
 
-  def __offset(self, auto, var):
+  def __offset(self, auto=False, var=False, wea=False, sky=False):
     '''
     Private function to return offset for optional entries.
     '''
@@ -93,6 +93,14 @@ class WeatherReport():
     if var:
       has_var, val = self.has_variable_wind()
       if has_var:
+        offset += 1
+    
+    if wea:
+      while self.__is_weather(self.tokens[5 + offset]):
+        offset += 1
+
+    if sky:
+      while self.__is_sky(self.tokens[5 + offset]):
         offset += 1
 
     return offset
@@ -230,11 +238,8 @@ class WeatherReport():
     return:
     sky: string []
     '''
-    offset = self.__offset(True, True)
+    offset = self.__offset(True, True, True)
     idx = 5 + offset
-
-    while self.__is_weather(self.tokens[idx]):
-      idx += 1
     
     sky_conditions = []
 
@@ -255,6 +260,33 @@ class WeatherReport():
 
     return sky_conditions
 
+  def temp_and_dewpoint(self):
+    '''
+    This function returns the temperature and dewpoint reported in the weather report.
+
+    return:
+    temp: int (Celsius)
+    dewpoint: int (Celsius)
+    '''
+    offset = self.__offset(True, True, True, True)
+    idx = 5 + offset
+
+    desc = self.tokens[idx]
+    vals = desc.split('/')
+    temp = vals[0]
+    dewpoint = vals[1]
+
+    if 'M' in temp:
+      temp = int(temp[1:]) * -1
+    else:
+      temp = int(temp)
+    
+    if 'M' in dewpoint:
+      dewpoint = int(dewpoint[1:]) * -1
+    else:
+      dewpoint = int(dewpoint)
+    
+    return temp, dewpoint
 # TESTING
 
 report = 'METAR CYYZ 162200Z 26010KT 210V280 15SM BKN035 BKN100 24/16 A2989 RMK CU6AC1 SLP121 DENSITY ALT 1900FT='
