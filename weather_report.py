@@ -7,6 +7,8 @@ from keywords import *
 
 from fractions import Fraction
 
+import json
+
 class WeatherReport():
   def __init__(self, report):
     '''
@@ -19,6 +21,20 @@ class WeatherReport():
     self.tokens = tokenize_text(report)
     self.report_type = self.categorize_report()
     
+  def __str__(self):
+    '''
+    Pretty prints the report.
+    '''
+    report = self.report()
+    report = json.dumps(report, indent=4)
+    return report
+
+  def __repr__(self):
+    '''
+    Prints the report.
+    '''
+    report = self.report()
+    return str(report)
 
   # TO DO: Validating a weather report.
 
@@ -342,6 +358,53 @@ class WeatherReport():
       idx += 1
     
     return remarks
+  
+  def report(self):
+    '''
+    This function returns the full weather report given in the weather report.
+
+    return:
+    report: {
+      'category': string
+      'airport': string
+      'time': {
+        'day': int
+        'hour': int
+        'minute': int
+      }
+      'automated': bool
+      'wind': {
+        'direction': int
+        'speed': int
+        'gust': int
+      }
+      'variable wind': (int, int) or False
+      'visibility': float
+      'weather': string []
+      'sky conditions': string []
+      'temperature': int
+      'dewpoint': int
+      'altimeter setting': float
+      'remarks': string []
+    }
+    '''
+    report = {
+      'category': self.categorize_report(),
+      'airport': self.airport_code(),
+      'time': self.time(),
+      'automated': self.is_auto(),
+      'wind': self.wind(),
+      'variable wind': self.has_variable_wind()[1],
+      'visibility': self.visibility(),
+      'weather': self.weather(),
+      'sky conditions': self.sky(),
+      'temperature': self.temp_and_dewpoint()[0],
+      'dewpoint': self.temp_and_dewpoint()[1],
+      'altimeter setting': self.altimeter(),
+      'remarks': self.remark()
+    }
+
+    return report
 # TESTING
 
 report = 'METAR CYYZ 162200Z 26010KT 210V280 15SM BKN035 BKN100 24/16 A2989 RMK CU6AC1 SLP121 DENSITY ALT 1900FT='
