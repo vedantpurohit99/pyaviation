@@ -50,7 +50,7 @@ def kph_to_statute(kph):
   '''
   return kph * 0.62
 
-def min_to_hour(minutes):
+def mins_to_hour(minutes):
   '''
   This function converts the given minutes to hours.
 

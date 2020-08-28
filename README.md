@@ -66,3 +66,23 @@ This submodule contains functions that quickly convert headings between compass,
 `compass_to_magnetic` - Convert a Compass heading to its Magnetic heading by providing deviation information.
 
 `magnetic_to_compass` - Convert a Magnetic heading to its Compass heading by providing deviation information.
+
+#### `conversion`
+
+This submodule contains functions that convert between statute
+and nautical miles as well as converting kph. Moreover, there
+are also function that convert between hours and minutes.
+
+#### Functions
+
+`nautical_to_statute` - Convert Nautical miles to Statute miles.
+
+`statute_to_nautical` - Convert Statute miles to Nautical miles.
+
+`kph_to_nautical` - Convert Kilometers per hour to Nautical miles.
+
+`kph_to_statute` - Convert Kilometers per hour to Statute miles.
+
+`mins_to_hour` - Convert minutes to hours.
+
+`hour_to_mins` - Convert hours to minutes.
