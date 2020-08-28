@@ -49,3 +49,27 @@ def kph_to_statute(kph):
   statute: float
   '''
   return kph * 0.62
+
+def min_to_hour(minutes):
+  '''
+  This function converts the given minutes to hours.
+
+  params:
+  minutes: float
+
+  return:
+  hours: float
+  '''
+  return minutes / 60
+
+def hour_to_mins(hours):
+  '''
+  This function converts the given hours to minutes.
+
+  params:
+  hours: float
+
+  return:
+  minutes: float
+  '''
+  return hours * 60
